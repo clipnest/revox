@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Visual Edit Engine Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div id="lock" class="lock">
+  <h2>License Required</h2>
+  <input id="keyInput" placeholder="Enter License Key">
+  <button onclick="checkKey()">Unlock</button>
+  <p id="msg"></p>
+</div>
+
+<div id="app" class="hidden">
+
+<header>
+  <h1>Visual Edit Engine Pro</h1>
+  <span class="version">v1.0</span>
+</header>
+
+<main>
+  <section class="panel input">
+    <select id="software"></select>
+    <select id="scene"></select>
+    <select id="audience"></select>
+    <select id="category"></select>
+    <select id="energy"></select>
+    <select id="color"></select>
+    <select id="clip"></select>
+    <button onclick="generate()">Generate Blueprint</button>
+  </section>
+
+  <section class="panel output">
+    <div class="tabs" id="tabs"></div>
+    <div class="result" id="result"></div>
+    <button onclick="copy()">Copy Output</button>
+  </section>
+</main>
+
+<footer>
+  © 2026 Visual Edit Engine • Built for Editors
+</footer>
+
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/license.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
