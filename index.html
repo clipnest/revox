@@ -2,33 +2,36 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Visual Edit Engine Pro</title>
+<title>REVOX – Visual Edit Engine</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link rel="stylesheet" href="css/style.css">
 </head>
+
+<body>
+
+<!-- ANIMATED BACKGROUND -->
 <div class="bg">
   <span></span><span></span><span></span>
 </div>
 
-<body>
-
+<!-- LICENSE LOCK -->
 <div id="lock" class="lock">
-  <h2>License Required</h2>
-  <input id="keyInput" placeholder="Enter License Key">
-  <button onclick="checkKey()">Unlock</button>
+  <h2>Enter License Key</h2>
+  <input id="keyInput" placeholder="REVOX-XXXX-XX">
+  <button onclick="checkKey()">Unlock Tool</button>
   <p id="msg"></p>
 </div>
 
+<!-- MAIN APP -->
 <div id="app" class="hidden">
 
 <header>
-  <h1>Visual Edit Engine Pro</h1>
-  <span class="version">v1.0</span>
+  <h1>REVOX</h1>
+  <p>Visual Edit Engine</p>
 </header>
 
 <main>
-  <section class="panel input">
+  <section class="panel">
     <select id="software"></select>
     <select id="scene"></select>
     <select id="audience"></select>
@@ -36,18 +39,25 @@
     <select id="energy"></select>
     <select id="color"></select>
     <select id="clip"></select>
-    <button onclick="generate()">Generate Blueprint</button>
+    <button onclick="generate()">Generate Visual Direction</button>
   </section>
 
-  <section class="panel output">
-    <div class="tabs" id="tabs"></div>
-    <div class="result" id="result"></div>
+  <section class="panel">
+    <div class="tabs">
+      <span onclick="show('visual')" class="active">Visual</span>
+      <span onclick="show('motion')">Motion</span>
+      <span onclick="show('strategy')">Strategy</span>
+      <span onclick="show('color')">Color</span>
+      <span onclick="show('combo')">Combo</span>
+    </div>
+
+    <div id="result" class="result"></div>
     <button onclick="copy()">Copy Output</button>
   </section>
 </main>
 
 <footer>
-  © 2026 Visual Edit Engine • Built for Editors
+  © 2026 REVOX • Built for Editors
 </footer>
 
 </div>
