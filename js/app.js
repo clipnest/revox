@@ -1,4 +1,4 @@
-let currentTab="visual";
+let data={};
 
 function fill(){
  for(let k in options){
@@ -12,65 +12,75 @@ function fill(){
 
 function generate(){
  let sw=software.value;
- let c=combos[sw]||combos["CapCut"];
+ let c=combos[sw];
 
  data={
-  visual:
-`SCENE VISUAL IDEA:
-• Primary focus: ${scene.value}
-• Visual style: ${clip.value}
-• What to show on screen:
+visual:
+`WHAT TO SHOW ON SCREEN:
+• Scene type: ${scene.value}
+• Visual base: ${clip.value}
+• On-screen idea:
   - Abstract shapes reacting to beats
-  - Minimal text highlights
-  - Smooth transitions between elements
+  - Minimal highlighted text
+  - Smooth visual flow
 
 PINTEREST SEARCH:
 "${scene.value} ${clip.value} motion graphic edit"`,
 
-  motion:
+motion:
 `MOTION DIRECTION:
-• Energy level: ${energy.value}
-• Motion type:
+• Energy: ${energy.value}
+• Motion style:
   - ${c.motion}
-  - Emphasis on rhythm sync
-  - Avoid random movement
+  - Beat-synced movement
+  - No random animation
 
-TIMING TIP:
-• Keep cuts tight
-• Let motion breathe for 0.3–0.5s`,
+TIMING:
+• Hold key visuals 0.3–0.5s`,
 
-  strategy:
-`CONTENT STRATEGY:
+strategy:
+`EDITING STRATEGY:
 • Audience: ${audience.value}
 • Goal:
-  - Hold attention in first 3 seconds
-  - Build visual curiosity
-  - Reduce visual noise
+  - Strong first 3 seconds
+  - Visual clarity
+  - Keep screen clean
 
 STRUCTURE:
-Hook → Visual build → Payoff`,
+Hook → Build → Payoff`,
 
-  color:
+color:
 `COLOR & MOOD:
 • Palette: ${color.value}
 • Contrast:
   - Bright elements on dark base
   - Avoid over-saturation
 
-LOOK FEEL:
-Clean, premium, modern`,
+FEEL:
+Premium & clean`,
 
-  combo:
+combo:
 `${sw.toUpperCase()} BEST COMBO:
-• Why this works:
+• Why:
   - ${c.best}
-• Best used for:
+• Best for:
   - ${c.use}
 
-EDITOR TIP:
-Save this combo as a preset`
+PRO TIP:
+Save this as a preset`
  };
 
  show("visual");
 }
 
+function show(type){
+ document.querySelectorAll(".tabs span").forEach(t=>t.classList.remove("active"));
+ event.target.classList.add("active");
+ result.innerText=data[type];
+}
+
+function copy(){
+ navigator.clipboard.writeText(result.innerText);
+}
+
+fill();
