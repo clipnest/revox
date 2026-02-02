@@ -1,86 +1,90 @@
 let data={};
 
-function fill(){
- for(let k in options){
-  let el=document.getElementById(k);
-  options[k].forEach(v=>{
-   let o=document.createElement("option");
-   o.text=v; el.add(o);
+document.addEventListener("DOMContentLoaded",()=>{
+
+ // fill selects
+ for(let key in options){
+  const el=document.getElementById(key);
+  options[key].forEach(v=>{
+   const opt=document.createElement("option");
+   opt.text=v;
+   el.add(opt);
   });
  }
-}
 
-function generate(){
- let sw=software.value;
- let c=combos[sw];
+ // generate
+ document.getElementById("generateBtn").onclick=()=>{
+  const sw=software.value;
+  const c=combos[sw];
 
- data={
+  data={
 visual:
-`WHAT TO SHOW ON SCREEN:
-• Scene type: ${scene.value}
-• Visual base: ${clip.value}
-• On-screen idea:
-  - Abstract shapes reacting to beats
-  - Minimal highlighted text
-  - Smooth visual flow
+`WHAT TO SHOW:
+• Scene: ${scene.value}
+• Visual type: ${clip.value}
+• On screen:
+  - Minimal shapes reacting to beats
+  - Key words highlighted
+  - Smooth transitions
 
 PINTEREST SEARCH:
 "${scene.value} ${clip.value} motion graphic edit"`,
 
 motion:
-`MOTION DIRECTION:
+`MOTION STYLE:
 • Energy: ${energy.value}
-• Motion style:
+• Direction:
   - ${c.motion}
-  - Beat-synced movement
-  - No random animation
-
-TIMING:
-• Hold key visuals 0.3–0.5s`,
+  - Beat-driven movement
+  - No random motion`,
 
 strategy:
-`EDITING STRATEGY:
+`EDIT STRATEGY:
 • Audience: ${audience.value}
-• Goal:
-  - Strong first 3 seconds
+• Focus:
+  - Strong hook (first 3 sec)
   - Visual clarity
-  - Keep screen clean
+  - Clean composition
 
-STRUCTURE:
+FLOW:
 Hook → Build → Payoff`,
 
 color:
-`COLOR & MOOD:
+`COLOR SYSTEM:
 • Palette: ${color.value}
-• Contrast:
-  - Bright elements on dark base
+• Rule:
+  - High contrast
   - Avoid over-saturation
-
-FEEL:
-Premium & clean`,
+  - Keep it premium`,
 
 combo:
-`${sw.toUpperCase()} BEST COMBO:
-• Why:
+`${sw.toUpperCase()} COMBO:
+• Why it works:
   - ${c.best}
 • Best for:
   - ${c.use}
 
-PRO TIP:
-Save this as a preset`
+TIP:
+Save this as preset`
+  };
+
+  showTab("visual");
  };
 
- show("visual");
-}
+ // tabs
+ document.querySelectorAll(".tabs span").forEach(tab=>{
+  tab.onclick=()=>showTab(tab.dataset.tab);
+ });
 
-function show(type){
+ // copy
+ document.getElementById("copyBtn").onclick=()=>{
+  navigator.clipboard.writeText(result.innerText);
+ };
+
+});
+
+function showTab(type){
  document.querySelectorAll(".tabs span").forEach(t=>t.classList.remove("active"));
- event.target.classList.add("active");
- result.innerText=data[type];
+ document.querySelector(`[data-tab="${type}"]`).classList.add("active");
+ result.innerText=data[type]||"Generate output first";
 }
-
-function copy(){
- navigator.clipboard.writeText(result.innerText);
-}
-
-fill();
