@@ -1,73 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>REVOX – Visual Edit Engine</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Visual Engine – Faceless Edit Assistant</title>
+
+<style>
+/* ---------- RESET ---------- */
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui;}
+body{
+  background:#0b0f1a;
+  color:#eaeaff;
+  overflow:hidden;
+}
+
+/* ---------- ANIMATED BACKGROUND ---------- */
+.bg {
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  overflow:hidden;
+}
+.shape{
+  position:absolute;
+  width:200px;
+  height:200px;
+  background:linear-gradient(135deg,#7f5cff,#00ffe1);
+  opacity:0.08;
+  animation:float 25s linear infinite;
+}
+.shape.triangle{
+  clip-path:polygon(50% 0%,0% 100%,100% 100%);
+}
+.shape.circle{
+  border-radius:50%;
+}
+@keyframes float{
+  from{transform:translateY(100vh) rotate(0deg);}
+  to{transform:translateY(-120vh) rotate(360deg);}
+}
+
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.card{
+  width:420px;
+  background:rgba(20,24,50,.85);
+  backdrop-filter:blur(14px);
+  border-radius:18px;
+  padding:26px;
+  box-shadow:0 0 40px rgba(127,92,255,.25);
+}
+
+/* ---------- TEXT ---------- */
+h1{
+  text-align:center;
+  font-size:22px;
+  margin-bottom:6px;
+}
+.sub{
+  text-align:center;
+  font-size:13px;
+  opacity:.7;
+  margin-bottom:18px;
+}
+
+/* ---------- INPUTS ---------- */
+label{
+  font-size:13px;
+  opacity:.8;
+}
+select,input{
+  width:100%;
+  margin-top:6px;
+  margin-bottom:14px;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  background:#0f1430;
+  color:#fff;
+}
+.hidden{display:none}
+
+/* ---------- BUTTON ---------- */
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  font-size:15px;
+  cursor:pointer;
+  background:linear-gradient(135deg,#7f5cff,#00ffe1);
+  color:#000;
+  font-weight:600;
+  transition:.3s;
+}
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 25px rgba(127,92,255,.6);
+}
+
+/* ---------- OUTPUT ---------- */
+.output{
+  margin-top:16px;
+  background:#0f1430;
+  padding:14px;
+  border-radius:12px;
+  font-size:14px;
+  line-height:1.6;
+  white-space:pre-line;
+}
+.copy{
+  margin-top:10px;
+  background:#1b2150;
+  color:#fff;
+}
+
+/* ---------- TRUST ---------- */
+.footer{
+  text-align:center;
+  font-size:11px;
+  opacity:.5;
+  margin-top:14px;
+}
+</style>
 </head>
 
 <body>
 
 <!-- BACKGROUND -->
 <div class="bg">
-  <span></span><span></span><span></span>
+  <div class="shape triangle" style="left:10%;animation-duration:30s"></div>
+  <div class="shape circle" style="left:70%;animation-duration:35s"></div>
 </div>
+
+<div class="wrapper">
+<div class="card">
+
+<h1>Visual Engine</h1>
+<p class="sub">Faceless Editing Decision System</p>
 
 <!-- LICENSE -->
-<div id="lock" class="lock">
-  <h2>REVOX Access</h2>
-  <p class="sub">Enter your license key to continue</p>
-  <input id="keyInput" placeholder="REVOX-XXXX-XX">
-  <button id="unlockBtn">Unlock</button>
-  <p id="msg" class="error"></p>
+<div id="licenseBox">
+  <label>License Key</label>
+  <input id="licenseInput" placeholder="REVOX-XXXX-XX">
+  <button onclick="unlock()">Unlock Tool</button>
 </div>
 
-<!-- APP -->
-<div id="app" class="hidden">
+<!-- MAIN TOOL -->
+<div id="tool" class="hidden">
 
-<header>
-  <h1>REVOX</h1>
-  <p class="tagline">Visual Direction System for Editors</p>
-</header>
+<label>Editing Software</label>
+<select id="software">
+  <option>CapCut</option>
+  <option>After Effects</option>
+  <option>Premiere Pro</option>
+  <option>Alight Motion</option>
+  <option>DaVinci Resolve</option>
+</select>
 
-<main>
-  <section class="panel">
-    <select id="software"></select>
-    <select id="scene"></select>
-    <select id="audience"></select>
-    <select id="energy"></select>
-    <select id="color"></select>
-    <select id="clip"></select>
-    <button id="generateBtn">Generate Direction</button>
-  </section>
+<label>Video Tone</label>
+<select id="tone">
+  <option>Luxury</option>
+  <option>Motivational</option>
+  <option>Dark</option>
+  <option>Fast Viral</option>
+</select>
 
-  <section class="panel">
-    <div class="tabs">
-      <span data-tab="visual" class="active">Visual</span>
-      <span data-tab="motion">Motion</span>
-      <span data-tab="strategy">Strategy</span>
-      <span data-tab="color">Color</span>
-      <span data-tab="combo">Combo</span>
-    </div>
+<label>Video Speed</label>
+<select id="speed">
+  <option>Slow</option>
+  <option>Medium</option>
+  <option>Fast</option>
+</select>
 
-    <div id="result" class="result">
-Select options and click Generate
-    </div>
+<button onclick="generate()">Generate Visual Direction</button>
 
-    <button id="copyBtn">Copy Output</button>
-  </section>
-</main>
-
-<footer>
-  <p>© 2026 REVOX • Built for Video Editors</p>
-  <p class="trust">No AI • No subscriptions • One-time access</p>
-</footer>
+<div id="result" class="output hidden"></div>
+<button id="copyBtn" class="copy hidden" onclick="copyText()">Copy Output</button>
 
 </div>
 
-<script src="js/data.js"></script>
-<script src="js/license.js"></script>
-<script src="js/app.js"></script>
+<div class="footer">© 2026 Visual Engine • No AI • Deterministic System</div>
+
+</div>
+</div>
+
+<script>
+/* ---------- LICENSE SYSTEM ---------- */
+const KEYS = [
+  "REVOX-7A92-X1",
+  "REVOX-4K88-Z9",
+  "REVOX-9P31-Q7",
+  "REVOX-2M55-R4",
+  "REVOX-8T63-L2"
+];
+
+function unlock(){
+  const key=document.getElementById("licenseInput").value.trim();
+  if(KEYS.includes(key)){
+    localStorage.setItem("ve_unlocked","true");
+    document.getElementById("licenseBox").classList.add("hidden");
+    document.getElementById("tool").classList.remove("hidden");
+  }else{
+    alert("Invalid License Key");
+  }
+}
+if(localStorage.getItem("ve_unlocked")==="true"){
+  document.getElementById("licenseBox").classList.add("hidden");
+  document.getElementById("tool").classList.remove("hidden");
+}
+
+/* ---------- GENERATOR ---------- */
+function generate(){
+  const s=software.value;
+  const t=tone.value;
+  const sp=speed.value;
+
+  const text =
+`🎬 SCENE VISUAL GUIDE
+
+Software: ${s}
+Tone: ${t}
+Speed: ${sp}
+
+WHAT TO SHOW:
+• Use minimal abstract shapes or stock textures
+• Avoid showing people or faces
+• Focus on movement, not details
+
+MOTION STYLE:
+• Start with slow zoom-in
+• Add smooth push or pan movement
+• Use subtle glow or light leaks
+• End with fast micro-zoom or shake
+
+GRAPHICS IDEA (Pinterest Search):
+"${t.toLowerCase()} faceless motion graphics ${sp.toLowerCase()} edit"
+
+EDITING TIPS:
+• Keep cuts aligned with beats
+• Add motion every 1–1.5 seconds
+• Never keep screen static
+• Let visuals support the message, not overpower it
+
+FINAL FEEL:
+Clean, intentional, premium and engaging.
+`;
+
+  result.textContent=text;
+  result.classList.remove("hidden");
+  copyBtn.classList.remove("hidden");
+}
+
+function copyText(){
+  navigator.clipboard.writeText(result.textContent);
+  alert("Copied to clipboard");
+}
+</script>
+
 </body>
 </html>
