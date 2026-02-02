@@ -6,17 +6,21 @@ const KEYS=[
  "REVOX-8T63-L2"
 ];
 
-function checkKey(){
- if(KEYS.includes(keyInput.value.trim())){
-  localStorage.setItem("licensed","yes");
-  lock.classList.add("hidden");
-  app.classList.remove("hidden");
+function unlock(){
+ const input=document.getElementById("keyInput").value.trim();
+ if(KEYS.includes(input)){
+  localStorage.setItem("revox_access","yes");
+  document.getElementById("lock").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
  }else{
-  msg.innerText="Invalid license key";
+  document.getElementById("msg").innerText="Invalid license key";
  }
 }
 
-if(localStorage.getItem("licensed")==="yes"){
- lock.classList.add("hidden");
- app.classList.remove("hidden");
-}
+document.addEventListener("DOMContentLoaded",()=>{
+ if(localStorage.getItem("revox_access")==="yes"){
+  lock.classList.add("hidden");
+  app.classList.remove("hidden");
+ }
+ document.getElementById("unlockBtn").onclick=unlock;
+});
