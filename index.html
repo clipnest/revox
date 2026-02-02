@@ -9,25 +9,26 @@
 
 <body>
 
-<!-- ANIMATED BACKGROUND -->
+<!-- BACKGROUND -->
 <div class="bg">
   <span></span><span></span><span></span>
 </div>
 
-<!-- LICENSE LOCK -->
+<!-- LICENSE -->
 <div id="lock" class="lock">
-  <h2>Enter License Key</h2>
+  <h2>REVOX Access</h2>
+  <p class="sub">Enter your license key to continue</p>
   <input id="keyInput" placeholder="REVOX-XXXX-XX">
-  <button onclick="checkKey()">Unlock Tool</button>
-  <p id="msg"></p>
+  <button id="unlockBtn">Unlock</button>
+  <p id="msg" class="error"></p>
 </div>
 
-<!-- MAIN APP -->
+<!-- APP -->
 <div id="app" class="hidden">
 
 <header>
   <h1>REVOX</h1>
-  <p>Visual Edit Engine</p>
+  <p class="tagline">Visual Direction System for Editors</p>
 </header>
 
 <main>
@@ -35,29 +36,32 @@
     <select id="software"></select>
     <select id="scene"></select>
     <select id="audience"></select>
-    <select id="category"></select>
     <select id="energy"></select>
     <select id="color"></select>
     <select id="clip"></select>
-    <button onclick="generate()">Generate Visual Direction</button>
+    <button id="generateBtn">Generate Direction</button>
   </section>
 
   <section class="panel">
     <div class="tabs">
-      <span onclick="show('visual')" class="active">Visual</span>
-      <span onclick="show('motion')">Motion</span>
-      <span onclick="show('strategy')">Strategy</span>
-      <span onclick="show('color')">Color</span>
-      <span onclick="show('combo')">Combo</span>
+      <span data-tab="visual" class="active">Visual</span>
+      <span data-tab="motion">Motion</span>
+      <span data-tab="strategy">Strategy</span>
+      <span data-tab="color">Color</span>
+      <span data-tab="combo">Combo</span>
     </div>
 
-    <div id="result" class="result"></div>
-    <button onclick="copy()">Copy Output</button>
+    <div id="result" class="result">
+Select options and click Generate
+    </div>
+
+    <button id="copyBtn">Copy Output</button>
   </section>
 </main>
 
 <footer>
-  © 2026 REVOX • Built for Editors
+  <p>© 2026 REVOX • Built for Video Editors</p>
+  <p class="trust">No AI • No subscriptions • One-time access</p>
 </footer>
 
 </div>
